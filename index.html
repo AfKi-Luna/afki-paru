@@ -103,7 +103,38 @@ footer{border-top:1px solid var(--line);padding:24px 16px;text-align:center;colo
  .about-grid{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr}.toolbar select{max-width:none;width:100%}
 }
 @media(max-width:380px){.content-grid{grid-template-columns:1fr}.nav-links a:nth-child(3){display:none}.section-head{align-items:start;flex-direction:column}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}} 
+/* Fix Afki and Paru images on mobile */
+.character img {
+  display: block;
+  width: 100%;
+  max-width: 130px;
+  height: 130px;
+  object-fit: contain;
+  margin: 0 auto 8px;
+}
+
+@media (max-width: 600px) {
+  .characters {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .character {
+    width: 47%;
+    max-width: 160px;
+    min-width: 0;
+    padding: 12px 8px;
+  }
+
+  .character img {
+    max-width: 110px;
+    height: 110px;
+  }
+}
 </style>
 </head>
 <body>
