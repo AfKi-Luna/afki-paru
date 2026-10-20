@@ -221,6 +221,27 @@ footer{border-top:1px solid var(--line);padding:24px 16px;text-align:center;colo
     box-shadow: 0 12px 28px #66507820;
   }
 }
+
+/* Afki & Paru Kitchen banner */
+.kitchen-banner {
+  display: block;
+  width: 100%;
+  height: clamp(180px, 32vw, 340px);
+  object-fit: cover;
+  object-position: center;
+  border-radius: 24px;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 24px #66507818;
+}
+
+@media (max-width: 600px) {
+  .kitchen-banner {
+    height: 190px;
+    border-radius: 18px;
+    margin-bottom: 16px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -235,6 +256,13 @@ footer{border-top:1px solid var(--line);padding:24px 16px;text-align:center;colo
 </header>
 <main id="home">
   <section class="hero" aria-labelledby="heroTitle">
+  
+<img
+  class="kitchen-banner"
+  src="afki-paru-kitchen.png"
+  alt="Afki and Paru presenting delicious food in their cozy kitchen"
+>
+    
     <div class="hero-grid">
       <div>
         <div class="eyebrow">A little universe, made with heart</div>
