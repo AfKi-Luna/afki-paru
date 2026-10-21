@@ -376,6 +376,11 @@ function renderEntries(){
   return matchesCat&&haystack.includes(q);
  });
  contentGrid.innerHTML=filtered.length?filtered.map(cardHTML).join(""):'<div class="empty"><div style="font-size:2rem">🔎</div><strong>No little discoveries found</strong><p>Try another keyword or choose a different category.</p><button class="btn btn-soft" data-reset>Clear filters</button></div>';
+  const oldBanner=document.getElementById("kitchenRecipeBanner");
+if(oldBanner)oldBanner.remove();
+if(selectedCategory==="cuisine"){
+  contentGrid.insertAdjacentHTML("beforebegin",'<img id="kitchenRecipeBanner" src="afki-paru-kitchen.png" alt="Afki and Paru in their cozy kitchen" style="width:100%;max-height:320px;object-fit:cover;object-position:center 35%;border-radius:22px;margin:0 0 20px;display:block;">');
+}
  document.getElementById("resultSummary").textContent=`Showing ${filtered.length} of ${entries.length} sample entries.`;
  document.getElementById("sampleCount").textContent=`${entries.length} sample entries`;
  document.getElementById("footerCount").textContent=`${entries.length} sample entries published · 2,700-entry goal`;
