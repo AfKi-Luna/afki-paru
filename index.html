@@ -242,6 +242,25 @@ footer{border-top:1px solid var(--line);padding:24px 16px;text-align:center;colo
   }
 }
 
+.main-header-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 620px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 24px;
+  margin: 0 auto 22px;
+  box-shadow: 0 8px 24px #66507818;
+}
+
+@media (max-width: 600px) {
+  .main-header-image {
+    border-radius: 18px;
+    margin-bottom: 16px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -257,6 +276,12 @@ footer{border-top:1px solid var(--line);padding:24px 16px;text-align:center;colo
 <main id="home">
   <section class="hero" aria-labelledby="heroTitle">
   
+<img
+  class="main-header-image"
+  src="afki-paru-header.png"
+  alt="Afki and Paru in their dreamy creative world"
+>
+
     <div class="hero-grid">
       <div>
         <div class="eyebrow">A little universe, made with heart</div>
