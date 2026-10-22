@@ -266,7 +266,25 @@ justify-content: flex-start;
     margin-bottom: 16px;
   }
 }
+/* Responsive kitchen banner */
+#kitchenRecipeBanner {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 280px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 18px;
+  margin: 12px auto 18px;
+}
 
+@media (min-width: 768px) {
+  #kitchenRecipeBanner {
+    max-width: 900px;
+    max-height: 260px;
+  }
+  }
 </style>
 </head>
 <body>
