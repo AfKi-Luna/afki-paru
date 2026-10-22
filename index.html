@@ -146,7 +146,10 @@ footer{border-top:1px solid var(--line);padding:24px 16px;text-align:center;colo
   aspect-ratio: auto;
   min-height: 235px;
   padding: 16px 10px;
-  justify-content: flex-start;
+  display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: flex-start;
   border: 1px solid #ffffffd9;
   border-radius: 26px;
   background: #ffffffa8;
@@ -205,7 +208,8 @@ footer{border-top:1px solid var(--line);padding:24px 16px;text-align:center;colo
 }
 
 .character strong {
-  margin-top: 8px;
+  margin-top: 4px;
+min-height: 1.6em;
 }
 
 .character small {
