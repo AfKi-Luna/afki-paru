@@ -414,7 +414,11 @@ function renderCategories(){
  const grid=document.getElementById("categoryGrid");
  grid.innerHTML=categories.map(c=>`<button class="category ${selectedCategory===c.id?"active":""}" data-cat="${c.id}" aria-pressed="${selectedCategory===c.id}"><span class="cat-icon">${c.icon}</span><strong>${escapeHTML(c.name)}</strong><small>${escapeHTML(c.desc)}</small></button>`).join("");
  categorySelect.innerHTML='<option value="all">All categories</option>'+categories.map(c=>`<option value="${c.id}">${escapeHTML(c.name)}</option>`).join("");
- grid.querySelectorAll("[data-cat]").forEach(b=>{b.onclick=()=>{selectedCategory=b.dataset.cat;categorySelect.value=selectedCategory;renderCategories();renderEntries();};});
+ grid.querySelectorAll("[data-cat]").forEach(b=>{
+  b.addEventListener("click",function(){
+    setCategory(this.dataset.cat);
+  });
+});
 }
 function cardHTML(entry){
  const c=byId(entry.cat),saved=favourites.has(entry.id);
