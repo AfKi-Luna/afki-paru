@@ -331,7 +331,123 @@ justify-content: flex-start;
 .motivation-card .text-btn {
   color: #E8C778;
 }
-  
+
+/* Motivational poster cards */
+.motivation-poster {
+  background: #542747;
+  border: 2px solid #D9AE62;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px #54274720;
+}
+
+.poster-frame {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-height: 245px;
+  padding: 14px;
+  border: 1px solid #E8C778;
+  border-radius: 14px;
+  background: linear-gradient(135deg,#542747,#35162F);
+  color: #F7EBD7;
+  overflow: hidden;
+}
+
+.poster-copy {
+  position: relative;
+  z-index: 1;
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 6px 4px 24px;
+}
+
+.poster-number {
+  align-self: flex-start;
+  border: 1px solid #E8C778;
+  border-radius: 50%;
+  color: #E8C778;
+  padding: 4px 7px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.poster-quote {
+  margin-top: 10px;
+  color: #E8C778;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: clamp(17px, 4vw, 25px);
+  line-height: 1.18;
+}
+
+.poster-divider {
+  color: #E8C778;
+  margin: 10px 0 5px;
+  font-size: 11px;
+}
+
+.poster-copy p {
+  color: #F7EBD7;
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 3px 0 8px;
+}
+
+.poster-category {
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+  color: #F7EBD7;
+  font-size: 10px;
+}
+
+.poster-image {
+  width: 52%;
+  min-width: 0;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+}
+
+.poster-fav {
+  position: absolute;
+  right: 9px;
+  bottom: 8px;
+  z-index: 2;
+  color: #E8C778;
+  background: #542747;
+  border: 1px solid #E8C778;
+  border-radius: 50%;
+  width: 29px;
+  height: 29px;
+  font-size: 17px;
+}
+
+@media (min-width: 768px) {
+  .motivation-poster {
+    width: 100%;
+  }
+
+  .poster-frame {
+    min-height: 280px;
+  }
+
+  .poster-copy {
+    padding: 10px 12px 28px;
+  }
+
+  .poster-quote {
+    font-size: 27px;
+  }
+
+  .poster-copy p {
+    font-size: 14px;
+  }
+} 
 </style>
 </head>
 <body>
@@ -463,17 +579,34 @@ function renderCategories(){
   });
 });
 }
+
 function cardHTML(entry){
- const c=byId(entry.cat),saved=favourites.has(entry.id);
-const isMotivation=entry.cat==="motivation";
- 
-  return `<article class="content-card ${isMotivation?"motivation-card":""}">
-    <div class="card-art" style="background:${isMotivation?"#542747":c.color}">
-      <span class="art-label" style="${isMotivation?"color:#E8C778":""}">${escapeHTML(c.name)}</span>
-      ${isMotivation && entry.image ? `<img class="motivation-art-image" src="${entry.image}" alt="Afki and Paru illustration for ${escapeHTML(entry.title)}">` : `<span class="art-icon" aria-hidden="true">${c.icon}</span>`}
+  const c=byId(entry.cat),saved=favourites.has(entry.id);
+  const isMotivation=entry.cat==="motivation";
+
+  if(isMotivation){
+    return `<article class="content-card motivation-poster">
+      <div class="poster-frame">
+        <div class="poster-copy">
+          <div class="poster-number">${entry.id==="m1"?"01":"02"}</div>
+          <div class="poster-quote">“${escapeHTML(entry.title)}”</div>
+          <div class="poster-divider">──── ♡ ────</div>
+          <p>${escapeHTML(entry.text)}</p>
+          <div class="poster-category">✿ Motivation</div>
+        </div>
+        <img class="poster-image" src="${entry.image}" alt="Afki and Paru">
+        <button class="poster-fav fav-btn ${saved?"saved":""}" data-fav="${entry.id}" aria-label="${saved?"Remove from":"Add to"} favourites" aria-pressed="${saved}">${saved?"♥":"♡"}</button>
+      </div>
+    </article>`;
+  }
+
+  return `<article class="content-card">
+    <div class="card-art" style="background:${c.color}">
+      <span class="art-label">${escapeHTML(c.name)}</span>
+      <span class="art-icon" aria-hidden="true">${c.icon}</span>
     </div>
-    <div class="card-body ${isMotivation?"motivation-card-body":""}">
-      <h3>${isMotivation?`<span class="gold-quote">“${escapeHTML(entry.title)}”</span>`:escapeHTML(entry.title)}</h3>
+    <div class="card-body">
+      <h3>${escapeHTML(entry.title)}</h3>
       <p>${escapeHTML(entry.text.length>112?entry.text.slice(0,109)+"…":entry.text)}</p>
       <div class="card-foot">
         <button class="text-btn" data-open="${entry.id}">Read more ↗</button>
