@@ -384,8 +384,8 @@ const categories = [
  {id:"technologia",name:"Technologia",icon:"💻",color:"#dcd0f6",desc:"Technology blogs and guides"},
 ];
 const entries = [
- {id:"m1",cat:"motivation",title:"Progress can be quiet",text:"You do not have to transform your whole life in one day. One honest step, repeated gently, can take you somewhere new.",tags:"progress gentle encouragement"},
- {id:"m2",cat:"motivation",title:"Begin where you are",text:"Use what you have, learn what you can, and let today's small beginning be enough for today.",tags:"beginning confidence"},
+{id:"m1",cat:"motivation",title:"Small steps still lead to big changes",text:"You don't have to do everything today; just don't stop.",tags:"motivation progress",image:"motivation-01-small-steps.jpg"},
+{id:"m2",cat:"motivation",title:"Progress over perfection",text:"A better version of you is still a version worth celebrating.",tags:"motivation progress",image:"motivation-02-progress-over-perfection.jpg"},
  {id:"f1",cat:"funny",title:"The five-minute break",text:"Me: I will rest my eyes for five minutes. Also me, forty-seven minutes later: how did I get to a video about penguins?",tags:"humour relatable break"},
  {id:"f2",cat:"funny",title:"A very serious plan",text:"Today's plan: be productive. Step one: make a beautiful list. Step two: admire the list. Step three: tomorrow.",tags:"funny planning"},
  {id:"i1",cat:"islamic",title:"Remember gratitude",text:"A gentle practice: pause and name one blessing you noticed today. For a verse-based reflection, read Quran 14:7 in a trusted translation and consult its surrounding context.",tags:"gratitude Quran reflection"},
@@ -422,6 +422,7 @@ function renderCategories(){
 }
 function cardHTML(entry){
  const c=byId(entry.cat),saved=favourites.has(entry.id);
+const isMotivation=entry.cat==="motivation";
  return `<article class="content-card"><div class="card-art" style="background:${c.color}"><span class="art-label">${escapeHTML(c.name)}</span><span class="art-icon" aria-hidden="true">${c.icon}</span></div><div class="card-body"><h3>${escapeHTML(entry.title)}</h3><p>${escapeHTML(entry.text.length>112?entry.text.slice(0,109)+"…":entry.text)}</p><div class="card-foot"><button class="text-btn" data-open="${entry.id}">Read more ↗</button><button class="fav-btn ${saved?"saved":""}" data-fav="${entry.id}" aria-label="${saved?"Remove from":"Add to"} favourites" aria-pressed="${saved}">${saved?"♥":"♡"}</button></div></div></article>`;
 }
 function renderEntries(){
