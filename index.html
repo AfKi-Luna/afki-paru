@@ -289,6 +289,49 @@ justify-content: flex-start;
     object-position: center 25%;
   }
 }
+
+/* Afki & Paru motivational cards */
+.motivation-card .card-art {
+  background: #542747 !important;
+  min-height: 170px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px;
+  overflow: hidden;
+}
+
+.motivation-card .art-label {
+  color: #E8C778 !important;
+}
+
+.motivation-card .motivation-art-image {
+  width: 125px;
+  height: 125px;
+  object-fit: contain;
+  object-position: center;
+  flex-shrink: 0;
+}
+
+.motivation-card .motivation-card-body {
+  background: #542747;
+}
+
+.motivation-card .motivation-card-body h3 {
+  color: #E8C778;
+  line-height: 1.5;
+}
+
+.motivation-card .motivation-card-body p {
+  color: #F7EBD7;
+}
+
+.motivation-card .text-btn {
+  color: #E8C778;
+}
+  
 </style>
 </head>
 <body>
@@ -423,8 +466,23 @@ function renderCategories(){
 function cardHTML(entry){
  const c=byId(entry.cat),saved=favourites.has(entry.id);
 const isMotivation=entry.cat==="motivation";
- return `<article class="content-card"><div class="card-art" style="background:${c.color}"><span class="art-label">${escapeHTML(c.name)}</span><span class="art-icon" aria-hidden="true">${c.icon}</span></div><div class="card-body"><h3>${escapeHTML(entry.title)}</h3><p>${escapeHTML(entry.text.length>112?entry.text.slice(0,109)+"…":entry.text)}</p><div class="card-foot"><button class="text-btn" data-open="${entry.id}">Read more ↗</button><button class="fav-btn ${saved?"saved":""}" data-fav="${entry.id}" aria-label="${saved?"Remove from":"Add to"} favourites" aria-pressed="${saved}">${saved?"♥":"♡"}</button></div></div></article>`;
+ 
+  return `<article class="content-card ${isMotivation?"motivation-card":""}">
+    <div class="card-art" style="background:${isMotivation?"#542747":c.color}">
+      <span class="art-label" style="${isMotivation?"color:#E8C778":""}">${escapeHTML(c.name)}</span>
+      ${isMotivation && entry.image ? `<img class="motivation-art-image" src="${entry.image}" alt="Afki and Paru illustration for ${escapeHTML(entry.title)}">` : `<span class="art-icon" aria-hidden="true">${c.icon}</span>`}
+    </div>
+    <div class="card-body ${isMotivation?"motivation-card-body":""}">
+      <h3>${isMotivation?`<span class="gold-quote">“${escapeHTML(entry.title)}”</span>`:escapeHTML(entry.title)}</h3>
+      <p>${escapeHTML(entry.text.length>112?entry.text.slice(0,109)+"…":entry.text)}</p>
+      <div class="card-foot">
+        <button class="text-btn" data-open="${entry.id}">Read more ↗</button>
+        <button class="fav-btn ${saved?"saved":""}" data-fav="${entry.id}" aria-label="${saved?"Remove from":"Add to"} favourites" aria-pressed="${saved}">${saved?"♥":"♡"}</button>
+      </div>
+    </div>
+  </article>`;
 }
+
 function renderEntries(){
  const q=searchInput.value.trim().toLowerCase();
  const filtered=entries.filter(e=>{
