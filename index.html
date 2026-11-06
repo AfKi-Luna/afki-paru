@@ -259,7 +259,22 @@ function art(e){const c=byId(e.cat),img=e.image?`<img src="${esc(e.image)}" alt=
 function card(e){return `<article class="card">${art(e)}<button class="open" data-open="${e.id}" aria-label="Open ${esc(e.title)}"></button><div class="card-tools"><button class="card-tool" data-share="${e.id}">Share</button><button class="card-tool" data-download="${e.id}">Download</button></div><button class="fav ${saved.has(e.id)?"saved":""}" data-fav="${e.id}" aria-label="Toggle favourite">${saved.has(e.id)?"♥":"♡"}</button></article>`}
 function renderCategories(){$("categoryGrid").innerHTML=categories.map(c=>`<button class="category-card ${selected===c.id?"active":""}" data-cat="${c.id}"><span class="ico">${c.icon}</span><strong>${esc(c.name)}</strong><small>${esc(c.desc)}</small></button>`).join("");$("filter").innerHTML='<option value="all">All categories</option>'+categories.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");$("filter").value=selected}
 function filtered(){const q=$("search").value.trim().toLowerCase();return entries.filter(e=>!e.comic&&(selected==="all"||e.cat===selected)&&(e.title+" "+e.text+" "+byId(e.cat).name).toLowerCase().includes(q))}
-function render(){const comics=entries.filter(e=>e.comic);$("comicCards").innerHTML=comics.map(card).join("");const a=filtered();$("entries").innerHTML=a.length?a.map(card).join(""):'<div class="empty">No posts found. Try another search or category.</div>';$("summary").textContent=`Showing ${a.length} starter posts.`;$("entryCount").textContent=a.length+" posts";$("footerCount").textContent=entries.filter(e=>!e.comic).length+" starter posts";const f=entries.filter(e=>saved.has(e.id));$("favs").innerHTML=f.length?f.map(card).join(""):'<div class="empty">Your favourites will appear here.<br>Tap ♡ on any card to save it.</div>';$("favNav").textContent=saved.size?`(${saved.size})`:""}
+function render(){const comics=entries.filter(e=>e.comic);
+const today = new Date();
+const start = new Date(2026, 10, 2);
+today.setHours(0,0,0,0);
+
+let workingDays = 0;
+for (let d = new Date(start); d <= today; d.setDate(d.getDate()+1)) {
+  const day = d.getDay();
+  if (day !== 0 && day !== 6) workingDays++;
+}
+
+const comicIndex = Math.max(0, workingDays - 1) % comics.length;
+$("comicCards").innerHTML = comics.length
+  ? card(comics[comicIndex])
+  : "";
+const a=filtered();$("entries").innerHTML=a.length?a.map(card).join(""):'<div class="empty">No posts found. Try another search or category.</div>';$("summary").textContent=`Showing ${a.length} starter posts.`;$("entryCount").textContent=a.length+" posts";$("footerCount").textContent=entries.filter(e=>!e.comic).length+" starter posts";const f=entries.filter(e=>saved.has(e.id));$("favs").innerHTML=f.length?f.map(card).join(""):'<div class="empty">Your favourites will appear here.<br>Tap ♡ on any card to save it.</div>';$("favNav").textContent=saved.size?`(${saved.size})`:""}
 function choose(id){selected=id;$("filter").value=id;renderCategories();render();if(id!=="all")$("explore").scrollIntoView({behavior:"smooth"})}
 function toggle(id){saved.has(id)?saved.delete(id):saved.add(id);try{localStorage.setItem("afkiParuFavourites",JSON.stringify([...saved]))}catch(e){}render();if(active)modalFavourite()}
 function shareEntry(id){const e=entries.find(x=>x.id===id);if(!e)return;const text=e.title+"\n\n"+e.text+"\n\nAfki & Paru";if(navigator.share){navigator.share({title:e.title,text,url:location.href}).catch(()=>{});}else if(navigator.clipboard){navigator.clipboard.writeText(text+"\n"+location.href).then(()=>alert("Post text copied. Paste it into your favourite app.")).catch(()=>alert(text))}else alert(text)}
