@@ -261,16 +261,20 @@ function renderCategories(){$("categoryGrid").innerHTML=categories.map(c=>`<butt
 function filtered(){const q=$("search").value.trim().toLowerCase();return entries.filter(e=>!e.comic&&(selected==="all"||e.cat===selected)&&(e.title+" "+e.text+" "+byId(e.cat).name).toLowerCase().includes(q))}
 function render(){const comics=entries.filter(e=>e.comic);
 const today = new Date();
-const start = new Date(2026, 10, 2);
 today.setHours(0,0,0,0);
 
+const start = new Date(2026, 10, 2);
+start.setHours(0,0,0,0);
+
 let workingDays = 0;
+
 for (let d = new Date(start); d <= today; d.setDate(d.getDate()+1)) {
   const day = d.getDay();
   if (day !== 0 && day !== 6) workingDays++;
 }
 
 const comicIndex = Math.max(0, workingDays - 1) % comics.length;
+
 $("comicCards").innerHTML = comics.length
   ? card(comics[comicIndex])
   : "";
